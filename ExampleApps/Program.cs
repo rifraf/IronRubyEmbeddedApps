@@ -21,7 +21,7 @@ namespace IronRubyConsole {
             Console.WriteLine();
 
             // list_args.rb
-            Console.WriteLine("bottles.rb");
+            Console.WriteLine("list_args.rb");
             Console.WriteLine("----------");
             try {
                 EmbeddedRuby er1 = new EmbeddedRuby();

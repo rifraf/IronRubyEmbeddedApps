@@ -3,7 +3,7 @@ IronRubyEmbeddedApps
 
 This repository shows how to create 'standalone' .Net applications written in Ruby. You
 can package up Ruby applications as ordinary .Net executables without having to ship a 
-collection of plain-text Ruby source file. No-one need ever know....
+collection of plain-text Ruby source files. No-one need ever know....
 
 This is done by using the following components:
 
