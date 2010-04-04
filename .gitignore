@@ -1,0 +1,6 @@
+_ReSharper.IREmbeddedApp/*
+ExampleApps/obj/
+IREmbeddedApp/bin/
+IREmbeddedApp/obj/
+IRTestResources/bin/
+IRTestResources/obj/
