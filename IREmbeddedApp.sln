@@ -11,6 +11,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleApps", "ExampleApps\
 		{252B7E48-4D69-4AAF-AB8F-BCA432D0BF2E} = {252B7E48-4D69-4AAF-AB8F-BCA432D0BF2E}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IRSinatra", "IRSinatra\IRSinatra.csproj", "{499B4084-8BA3-4B33-A146-CA32D078D961}"
+	ProjectSection(ProjectDependencies) = postProject
+		{252B7E48-4D69-4AAF-AB8F-BCA432D0BF2E} = {252B7E48-4D69-4AAF-AB8F-BCA432D0BF2E}
+		{68CBAEDA-18CC-4CC0-8555-942890512EF8} = {68CBAEDA-18CC-4CC0-8555-942890512EF8}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IREmbeddedLibraries", "IREmbeddedLibraries\IREmbeddedLibraries.csproj", "{68CBAEDA-18CC-4CC0-8555-942890512EF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +37,14 @@ Global
 		{F81E1902-C72C-4457-A526-A49AE80FEA1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F81E1902-C72C-4457-A526-A49AE80FEA1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F81E1902-C72C-4457-A526-A49AE80FEA1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{499B4084-8BA3-4B33-A146-CA32D078D961}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{499B4084-8BA3-4B33-A146-CA32D078D961}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{499B4084-8BA3-4B33-A146-CA32D078D961}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{499B4084-8BA3-4B33-A146-CA32D078D961}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68CBAEDA-18CC-4CC0-8555-942890512EF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68CBAEDA-18CC-4CC0-8555-942890512EF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68CBAEDA-18CC-4CC0-8555-942890512EF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68CBAEDA-18CC-4CC0-8555-942890512EF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,3 +4,8 @@ IREmbeddedApp/bin/
 IREmbeddedApp/obj/
 IRTestResources/bin/
 IRTestResources/obj/
+IREmbeddedLibraries/bin/
+IREmbeddedLibraries/obj/
+IRSinatra/obj/
+IREmbeddedApp.4.5.resharper
+IREmbeddedApp.4.5.resharper.user
