@@ -28,7 +28,7 @@ from embedded resources instead of reading them from disk.
 
 Contents
 --------
-This repository contains 3 projects:
+This repository contains 4 projects:
 
 IREmbeddedApp : The core IREmbeddedApp dll.
 
@@ -47,3 +47,4 @@ try {
   Console.WriteLine(e.Message);
 }
  
+IRSinatra : Yes - a fully embedded Sinatra application. Run and see!!
