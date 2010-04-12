@@ -13,7 +13,6 @@ namespace IronRubyConsole {
                 EmbeddedRuby er = new EmbeddedRuby();
                 AssemblyInfo resources = er.AddAssembly("IREmbeddedLibraries");
                 resources.Mount("Files/ironruby");
-                //resources.Mount("Files/rack-1.1.0/bin");
                 resources.Mount("Files/rack-1.1.0/lib");
                 resources.Mount("Files/sinatra-1.0/lib");
                 resources.Mount("Files/site_ruby/1.8");

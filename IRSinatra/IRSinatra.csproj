@@ -69,4 +69,9 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>"C:\Program Files\Microsoft\ILMerge\ILMerge.exe" /out:merge\IRSinatra.exe IRSinatra.exe IREmbeddedLibraries.dll IREmbeddedApp.dll Serfs.dll
+rem "C:\Program Files\Microsoft\ILMerge\ILMerge.exe" /out:merge\IRSinatra.exe IRSinatra.exe IREmbeddedLibraries.dll IREmbeddedApp.dll V:\Projects\Serfs\Serfs\bin\Serfs.dll
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>

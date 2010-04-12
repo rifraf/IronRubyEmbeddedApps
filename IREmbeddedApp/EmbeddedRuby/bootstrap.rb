@@ -2,26 +2,46 @@
 # read from SERFS (Simple Embedded Resource File System)
 # It finishes by loading $0 (which should be set up before entry)
 
-
 # ------------------------------------
 # Link to Serfs for file access
 # File emulation is limited at the moment
 # ------------------------------------
 module SerfSupp
 
+  def self.Debug 
+    false
+  end
+  
+  #---------------------
   # Autoload support
+  #---------------------
   def self.autoloadable
     @autoloadable ||= {}
   end
+  
   def self.autoloaded
     @autoloaded ||= {}
   end		
 
+  #---------------------
+  # File opening
+  #---------------------
+  def self.load_path_invalid(loc) 
+    loc =~ /^[a-zA-Z]:/
+  end
+  
+  def self.get_serf_name(loc, path)
+    return path[1..-1] if path =~ /^[\/]/
+	"#{loc}/#{path}".gsub(/\\/,'/').gsub(/^\/\//, './')
+  end
+  
   # Try to read complete file to a string
   def self.read_embedded_file(path)
+    str = nil
     $LOAD_PATH.each do |loc|
-      test = "#{loc}/#{path}".gsub(/\\/,'/')
-      str = SerfsInstance.read(test)
+      next if load_path_invalid(loc)
+      serf_name = get_serf_name(loc, path)
+      str = SerfsInstance.read(serf_name)
       return str.to_s if str
     end
     false
@@ -30,15 +50,18 @@ module SerfSupp
   # Try to open file as a stream
   def self.read_embedded_stream(path)
     $LOAD_PATH.each do |loc|
-      test = "#{loc}/#{path}".gsub(/\\/,'/')
-      stream = SerfsInstance.open_read(test)
+      next if load_path_invalid(loc)
+      serf_name = get_serf_name(loc, path)
+      stream = SerfsInstance.open_read(serf_name)
       return stream if stream
     end
     false
   end
   
+  #---------------------
   # Mock up a class that responds like File::Stat
   # Very limited support at the moment
+  #---------------------
   class SerfStat
     attr_reader :mtime, :size
     def initialize(filename, content)
@@ -49,15 +72,15 @@ module SerfSupp
   
   # Provide File::stat equivalent
   def self.stat(filename)
-    path = filename.gsub(/^S:\//,'')
-	str = read_embedded_file(path)
-    SerfStat.new(path, str) if str
+	str = read_embedded_file(filename)
+    SerfStat.new(filename, str) if str
   end
 
+  #---------------------
   # Provide File::open equivalent
+  #---------------------
   def self.open(filename, *args, &blk)
-    path = filename.gsub(/^S:\//,'')
-	stream = read_embedded_stream(path)
+	stream = read_embedded_stream(filename)
 	return nil unless stream
 
 	# Sinatra hack
@@ -89,6 +112,7 @@ class System::IO::UnmanagedMemoryStream
     buffer = String.CreateBinary(System::IO::BinaryReader.new(self).ReadBytes(num))
 	(buffer.length == 0) ? nil : buffer
   end
+  
 end
 
 # --------------------------------------------------
@@ -100,7 +124,7 @@ def load_embedded_file(path, wrap = false)
   # TODO: In no circumstance will any local variables in the loaded file be propagated to the loading environment. 
   str = SerfSupp.read_embedded_file(path)
   if (str) 
-    eval(str, nil, 'S:/' + path, 0)
+    eval(str, nil, '/' + path, 0)
     return true
   end
   false
@@ -108,7 +132,7 @@ end
 
 alias old_load load
 def load(filename, wrap = false)
-  filename.gsub!(/^S:\//,'')
+  filename.gsub!(/^\//,'')
   old_load(filename, wrap)
   rescue LoadError => load_error
     $! = nil
@@ -126,7 +150,7 @@ private :load
 alias old_require require
 def require(path)
 
-  #puts("======================= require > #{path}")
+  puts("======================= require > #{path}") if SerfSupp.Debug
   
   # Skip if we've seen file already
   filename_non_rb = path.gsub(/\.rb$/i,'')
@@ -136,8 +160,7 @@ def require(path)
   old_require(path) 
   rescue LoadError => load_error
     if load_error.message =~ /#{Regexp.escape path}\z/
-      #puts("=======================")
-      #puts("Try #{path}")
+      puts("Try #{path}") if SerfSupp.Debug
       filename = filename_non_rb + ".rb"
       str = SerfSupp.read_embedded_file(filename)
       unless (str) 
@@ -148,11 +171,11 @@ def require(path)
 	    $! = nil
 	    $" << filename_non_rb
 	    $" << path
-        #puts("Read #{filename}")
+        puts("Found #{filename}") if SerfSupp.Debug
 		begin
-	      eval(str, nil, 'S:/' + filename, 0)
+	      eval(str, nil, '/' + filename, 0)
 	    rescue Exception => e
-          #puts("Caught (#{filename}):" + e.message	    )
+          puts("Caught (#{filename}):" + e.message) if SerfSupp.Debug
           raise e
 	    end
         return true		
@@ -171,12 +194,12 @@ class Module
 
   alias old_const_missing const_missing
   def const_missing(name)
-    #puts "MISSING #{name}"
+    puts "MISSING #{name}" if SerfSupp.Debug
     SerfSupp.autoloaded[self] ||= {}
     file = autoload?(name)
     if file and !SerfSupp.autoloaded[self][name]
       SerfSupp.autoloaded[self][name] = true
-      #puts "AUTO.......... #{name}"
+      puts "AUTO.......... #{name}" if SerfSupp.Debug
       require file
       return const_get(name) if const_defined?(name)
     end
@@ -224,14 +247,20 @@ class File
     
     alias old_exist? exist?
     def exist?(filename)
-	  old_exist?(filename) || !!(filename =~ /^S:\//)	# TEMP!!!
+	  old_exist?(filename) || !!(filename =~ /^\//)	# TEMP!!!
 	end
 
     alias old_file? file?
     def file?(filename)
-	  old_file?(filename) || !!(SerfSupp.read_embedded_file(filename.gsub(/^S:\//,'')))
+	  old_file?(filename) || !!(SerfSupp.read_embedded_file(filename))
 	end
     
+    alias old_expand_path expand_path
+    def expand_path(path, aDirString = nil)
+	  return path if path =~ /^\//
+	  old_expand_path(path, aDirString)
+	end
+       
     alias old_open open
     def open(filename, *args, &blk)
       old_open(filename, *args, &blk)

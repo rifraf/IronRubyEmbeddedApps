@@ -13,11 +13,15 @@ namespace IREmbeddedApp {
         private readonly Serfs _serfs;
 
         public EmbeddedRuby() {
-            _serfs = new Serfs("EmbeddedRuby");
+            _serfs = new Serfs(null);
+            _serfs.IgnoreMissingAssemblies = true;
+            AddAssembly("IREmbeddedApp", "EmbeddedRuby");
         }
 
         public AssemblyInfo Mount(string topFolder) {
-            return _serfs.AddAssembly(Assembly.GetCallingAssembly().FullName,topFolder);
+            AssemblyInfo info = _serfs.AddAssembly(Assembly.GetCallingAssembly().GetName().Name);
+            info.Mount(topFolder);
+            return info;
         }
 
         public AssemblyInfo AddAssembly(string name) {
@@ -25,7 +29,9 @@ namespace IREmbeddedApp {
         }
 
         public AssemblyInfo AddAssembly(string name, string folder) {
-            return _serfs.AddAssembly(name, folder);
+            AssemblyInfo info = _serfs.AddAssembly(name);
+            info.Mount(folder);
+            return info;
         }
 
         public int Run(string app) {
@@ -51,7 +57,8 @@ namespace IREmbeddedApp {
             }
             // Prefix bootstrap with $0 and ARGV
             string boot = String.Format(
-                "$0='S:/{0}'\r\n{1}{2}",
+                //"$0='S:/{0}'\r\n{1}{2}",
+                "$0='/{0}' {1}{2}",
                 app, argv, _serfs.Read("bootstrap.rb")
                 );
             ScriptSource source = engine.CreateScriptSourceFromString(boot, "bootstrap.rb", SourceCodeKind.File);
