@@ -9,3 +9,5 @@ IREmbeddedLibraries/obj/
 IRSinatra/obj/
 IREmbeddedApp.4.5.resharper
 IREmbeddedApp.4.5.resharper.user
+**/Iron*.dll
+**/Micro*.dll

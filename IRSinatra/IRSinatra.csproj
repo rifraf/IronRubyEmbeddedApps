@@ -36,10 +36,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\IREmbeddedLibraries\bin\IREmbeddedLibraries.dll</HintPath>
     </Reference>
-    <Reference Include="IronRuby.Libraries, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\IronRuby 1.0.0.0\bin\IronRuby.Libraries.dll</HintPath>
-    </Reference>
     <Reference Include="Serfs, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\IREmbeddedApp\Serfs.dll</HintPath>
