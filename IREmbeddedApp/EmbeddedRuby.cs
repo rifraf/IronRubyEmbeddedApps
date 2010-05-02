@@ -72,7 +72,7 @@ namespace IREmbeddedApp {
             }
             // Prefix bootstrap with $0 and ARGV
             string boot = String.Format(
-                "$0='/{0}' {1}{2}",
+                "$0='/{0}'\n{1}{2}",
                 app, argv, _serfs.Read("bootstrap.rb")
                 );
             ScriptSource source = _engine.CreateScriptSourceFromString(boot, "bootstrap.rb", SourceCodeKind.File);

@@ -12,8 +12,16 @@ EOF
 doc = Document.new(string)
 doc.write $stdout
 
-doc = Document.new File.new("mydoc.xml")
+#??????????? Next line bust at the moment...
+#doc = Document.new File.new("mydoc.xml")
+#???????????
+s = SerfSupp.read_embedded_file("mydoc.xml")
+doc = Document.new(s)
+#doc.write $stdout	
+#???????????
+
 doc.elements.each("inventory/section") { |element| puts element.attributes["name"] }
+p __LINE__
 # -> health
 # -> food
 doc.elements.each("*/section/item") { |element| puts element.attributes["upc"] }
@@ -31,3 +39,4 @@ puts root.elements["section"].attributes["name"]
 puts root.elements[1].attributes["name"] 
 # -> health (returns the FIRST child element) 
 root.detect {|node| node.kind_of? Element and node.attributes["name"] == "food" }
+p __LINE__

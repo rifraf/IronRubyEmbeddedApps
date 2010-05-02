@@ -22,7 +22,7 @@ namespace IronRubyConsole {
 
             // list_args.rb
             Console.WriteLine("list_args.rb");
-            Console.WriteLine("----------");
+            Console.WriteLine("------------");
             try {
                 EmbeddedRuby er1 = new EmbeddedRuby();
                 er1.Mount("Applications");
@@ -43,7 +43,7 @@ namespace IronRubyConsole {
                 Console.WriteLine(e.Message);
             }
             Console.WriteLine();
-return 1;
+
             // rexml
             Console.WriteLine("test_rexml.rb");
             Console.WriteLine("-------------");

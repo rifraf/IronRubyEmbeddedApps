@@ -17,4 +17,6 @@ IREmbeddedApp.4.5.resharper.user
 **/Iron*.dll
 **/Micro*.dll
 **/*.pdb
+*.suo
 **/*.suo
+**/*.user
