@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="EmbeddedRuby.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Properties\AssemblyInfo_in.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="EmbeddedRuby\bootstrap.rb" />
@@ -71,4 +72,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PreBuildEvent>if exist ..\..\prebuild.bat ..\..\prebuild.bat</PreBuildEvent>
+    <PostBuildEvent>if exist ..\..\postbuild.bat ..\..\postbuild.bat</PostBuildEvent>
+  </PropertyGroup>
 </Project>

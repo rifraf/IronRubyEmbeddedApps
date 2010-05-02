@@ -1,5 +1,9 @@
+.svn
+prebuild.bat
+postbuild.bat
 _ReSharper.IREmbeddedApp/*
 ExampleApps/obj/
+ExampleApps/bin/
 IREmbeddedApp/bin/
 IREmbeddedApp/obj/
 IRTestResources/bin/
@@ -7,7 +11,10 @@ IRTestResources/obj/
 IREmbeddedLibraries/bin/
 IREmbeddedLibraries/obj/
 IRSinatra/obj/
+IRSinatra/bin/
 IREmbeddedApp.4.5.resharper
 IREmbeddedApp.4.5.resharper.user
 **/Iron*.dll
 **/Micro*.dll
+**/*.pdb
+**/*.suo

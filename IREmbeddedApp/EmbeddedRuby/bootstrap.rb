@@ -9,7 +9,11 @@
 module SerfSupp
 
   def self.Debug 
-    false
+    @_serfsupp_debug
+  end
+
+  def self.Debug=(value)
+    @_serfsupp_debug = value
   end
   
   #---------------------
@@ -80,8 +84,22 @@ module SerfSupp
   # Provide File::open equivalent
   #---------------------
   def self.open(filename, *args, &blk)
+
+    # Check the requested open mode. It can be a mode string or a mode number
+    open_mode = 'r'	# default
+    if args.length > 0
+      open_mode = args[0] if args[0].kind_of?(String)
+      # TODO : mode number
+    end
+    
+    # Cannot write to embedded resources...
+    return nil unless open_mode[0,1] == 'r'
+    return nil if open_mode.include?('+')
+    
 	stream = read_embedded_stream(filename)
 	return nil unless stream
+	
+	open_mode.include?('b') ? stream.select_binarymode : stream.select_textmode
 
 	# Sinatra hack
 	class << stream
@@ -106,13 +124,79 @@ class System::IO::UnmanagedMemoryStream
 
   def rewind
     self.position = 0	
+	@reader = @textmode ? System::IO::StreamReader.new(self) : System::IO::BinaryReader.new(self)
+  end
+  
+  def select_textmode
+    @textmode = true
+    rewind   
+  end
+
+  def select_binarymode
+    @textmode = false
+    rewind
   end
   
   def read(num)
-    buffer = String.CreateBinary(System::IO::BinaryReader.new(self).ReadBytes(num))
-	(buffer.length == 0) ? nil : buffer
+	if @textmode
+	  str = ""
+	  last_ch = nil
+	  until num == 0
+	    ch = reader.Read
+	    return str if ch < 0
+	    if (ch == 13) && (reader.Peek == 10)
+		  ch = reader.Read
+	    end
+        str << ch
+        num -= 1
+	  end
+	  return str
+	else
+      buffer = String.CreateBinary(reader.ReadBytes(num))
+	  (buffer.length == 0) ? nil : buffer
+	end
   end
   
+  def gets(aSepString = $/)
+	# TODO: Reads the next 'line' from the I/O stream; lines are separated by aSepString. 
+	# A separator of nil reads the entire contents, and a zero-length separator 
+	# reads the input a paragraph at a time (two successive newlines in the input 
+	# separate paragraphs). The stream must be opened for reading or an IOerror will 
+	# be raised. The line read in will be returned and also assigned to $_. 
+	# Returns nil if called at end of file. 
+	$_ = ''
+	val = read(1)
+	return nil unless val
+	while val
+	  $_ << val
+	  return $_ if (val == aSepString)
+	  return $_ if (val.length == 0) && $_[-2,2] == "\n\n"
+	  val = read(1)
+	end
+	return $_
+  end
+  
+  def readline(aSepString = $/)
+	# TODO: Reads a line as with IO#gets, but raises an EOFError on end of file.
+	raise EOFError if eof?
+	gets aSepString
+  end
+  
+  def eof?
+	eof = @textmode ? 
+	        @reader.end_of_stream : 
+	        @reader.peek_char < 0
+  end
+  
+  def reader
+	unless @reader
+	  rewind
+	  @reader = System::IO::StreamReader.new(self)
+	end
+	@reader
+  end
+  
+  private :reader
 end
 
 # --------------------------------------------------
@@ -261,14 +345,27 @@ class File
 	  old_expand_path(path, aDirString)
 	end
        
+    # TODO: service blk
     alias old_open open
     def open(filename, *args, &blk)
       old_open(filename, *args, &blk)
       rescue => error
+		puts "FILE:OPEN(#{filename}, #{args.join(', ')})"  if SerfSupp.Debug
         stream = SerfSupp.open(filename, *args, &blk)
         return stream if stream
         raise error
     end
+    
+    alias old_new new
+    def new(filename, *args)
+      old_new(filename, *args)
+      rescue Errno::ENOENT => error
+		puts "FILE:NEW(#{filename}, #{args.join(', ')})"  if SerfSupp.Debug
+        stream = SerfSupp.open(filename, *args)
+        return stream if stream
+        raise error
+    end
+    
   end
 end
 

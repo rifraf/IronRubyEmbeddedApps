@@ -1,15 +1,22 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Permissions;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("IREmbeddedApp")]
-[assembly: AssemblyDescription("Class to support embedding IronRuby scripts within an Application or Assembly")]
+[assembly: AssemblyDescription("Class to support embedding IronRuby scripts within an Application or Assembly. http://github.com/rifraf/IronRubyEmbeddedApps")]
+#if DEBUG
+[assembly: AssemblyConfiguration("Debug")]
+#elif BETA
+[assembly: AssemblyConfiguration("Beta")]
+#else
 [assembly: AssemblyConfiguration("")]
+#endif
 [assembly: AssemblyCompany("djlSoft")]
 [assembly: AssemblyProduct("IREmbeddedApp")]
-[assembly: AssemblyCopyright("Copyright David Lake ©  2010")]
+[assembly: AssemblyCopyright("Copyright David Lake © 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -21,14 +28,7 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("04947356-1695-4c1c-89a6-b8095f16907f")]
 
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Revision and Build Numbers 
-// by using the '*' as shown below:
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
+[assembly: AssemblyVersion("0.1.0.11545")]
+[assembly: AssemblyFileVersion("0.1.0.11545")]
+[assembly: AssemblyInformationalVersionAttribute("0.1.0.11545")]
+[assembly: SecurityPermission(SecurityAction.RequestMinimum, Execution = true)]

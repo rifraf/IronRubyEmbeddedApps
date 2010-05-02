@@ -7,8 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IRTestResources", "IRTestRe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleApps", "ExampleApps\ExampleApps.csproj", "{F81E1902-C72C-4457-A526-A49AE80FEA1F}"
 	ProjectSection(ProjectDependencies) = postProject
-		{9FE6381A-B2E1-4B08-A9CC-F62CD14B719C} = {9FE6381A-B2E1-4B08-A9CC-F62CD14B719C}
 		{252B7E48-4D69-4AAF-AB8F-BCA432D0BF2E} = {252B7E48-4D69-4AAF-AB8F-BCA432D0BF2E}
+		{68CBAEDA-18CC-4CC0-8555-942890512EF8} = {68CBAEDA-18CC-4CC0-8555-942890512EF8}
+		{9FE6381A-B2E1-4B08-A9CC-F62CD14B719C} = {9FE6381A-B2E1-4B08-A9CC-F62CD14B719C}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IRSinatra", "IRSinatra\IRSinatra.csproj", "{499B4084-8BA3-4B33-A146-CA32D078D961}"
@@ -18,6 +19,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IRSinatra", "IRSinatra\IRSi
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IREmbeddedLibraries", "IREmbeddedLibraries\IREmbeddedLibraries.csproj", "{68CBAEDA-18CC-4CC0-8555-942890512EF8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{252B7E48-4D69-4AAF-AB8F-BCA432D0BF2E} = {252B7E48-4D69-4AAF-AB8F-BCA432D0BF2E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

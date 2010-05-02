@@ -34,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Properties\AssemblyInfo_in.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Files\rack-1.1.0\bin\rackup" />
@@ -873,4 +874,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PreBuildEvent>if exist ..\..\prebuild.bat ..\..\prebuild.bat</PreBuildEvent>
+    <PostBuildEvent>if exist ..\..\postbuild.bat ..\..\postbuild.bat</PostBuildEvent>
+  </PropertyGroup>
 </Project>

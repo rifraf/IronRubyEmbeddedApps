@@ -1,0 +1,46 @@
+h1. IronRubyEmbeddedApps
+
+(More detail on the Wiki pages)
+
+This repository shows how to create _standalone_ .Net applications written in Ruby. 
+
+You can package up Ruby applications as ordinary .Net executables without having to ship a collection of plain-text Ruby source files and the associated standard Ruby libraries. 
+
+If you want proof, look at the single file @IRSinatra.exe@ which demonstrates a fully operational Sinatra example program. It needs no other files - you just need the IronRuby runtime DLLs to be available on the PC.
+
+Your source Ruby files are embedded directly into your executable, and you can use @require@, @load@, @File.open@ etc just as if the files were on disk.
+
+No-one need ever know... (including your IT department).
+
+Example:
+
+<pre><code>  EmbeddedRuby er = new EmbeddedRuby();
+  er.Mount("Applications");
+  exitcode = er1.Run("main.rb");
+</code></pre>
+
+h2. How
+
+To create an Embedded Ruby application, you just need the following components:
+
+h3. IronRuby
+
+"IronRuby":http://github.com/ironruby/ironruby is the Open Source version of Ruby for .Net
+
+h3. Serfs
+
+"Serfs":http://github.com/rifraf/Serfs is a "Simple Embedded Resource File System" for .Net. It provides access to files embedded in .Net assemblies. Files can be encoded for privacy.
+
+h3. IREmbeddedApp
+
+"IREmbeddedApp":http://github.com/rifraf/IronRubyEmbeddedApps/tree/master/IREmbeddedApp/ provides a wrapper for IronRuby and Serfs, and a bootstrapper that patches the appropriate Ruby methods so that they can read files from embedded resources.
+
+h1. Repository contents
+
+This repository contains the following parts
+
+# *IREmbeddedApp* : The core IREmbeddedApp dll.
+# *ExampleApps* : An example command-line program showing how to run Ruby programs.
+# *IREmbeddedLibraries* : A DLL containing a copy of the standard Ruby 1.8 libraries (including @rubygems@, @rexml@ etc), plus @rack-1.1.0@ and @sinatra-1.0@. This can be optionally included in an application if you need library support.
+# *IRSinatra* : A fully working Sinatra application with 2 flavours, one with libraries in individual DLLs, one with them all merged into the .exe
+# *IRTestResources* : An example DLL containing no code, just embedded resources (optparse, test::unit and flexmock taken directly from an ordinary Ruby install).

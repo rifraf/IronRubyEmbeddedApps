@@ -11,11 +11,25 @@ using SERFS;
 namespace IREmbeddedApp {
     public class EmbeddedRuby {
         private readonly Serfs _serfs;
+        private ScriptRuntime _runtime;
+        private ScriptEngine _engine;
+        private RubyContext _context;
 
         public EmbeddedRuby() {
             _serfs = new Serfs(null);
             _serfs.IgnoreMissingAssemblies = true;
             AddAssembly("IREmbeddedApp", "EmbeddedRuby");
+            Reset();
+        }
+
+        public void Reset() {
+            _runtime = Ruby.CreateRuntime();
+            _engine = _runtime.GetEngine("rb");
+            _context = (RubyContext)HostingHelpers.GetLanguageContext(_engine);
+        }
+
+        public IStreamDecoder Decoder {
+            set { _serfs.Decoder = value; }
         }
 
         public AssemblyInfo Mount(string topFolder) {
@@ -34,15 +48,16 @@ namespace IREmbeddedApp {
             return info;
         }
 
+        public void SetConstant(string name, object obj) {
+            _context.ObjectClass.SetConstant(name, obj);    
+        }
+
         public int Run(string app) {
             return Run(app, null);
         }
 
         public int Run(string app, string[] args) {
-            ScriptRuntime runtime = Ruby.CreateRuntime();
-            ScriptEngine engine = runtime.GetEngine("rb");
-            RubyContext context = (RubyContext)HostingHelpers.GetLanguageContext(engine);
-            context.ObjectClass.SetConstant("SerfsInstance", _serfs);
+            SetConstant("SerfsInstance", _serfs);
 
             // Sort out ARGV
             string argv;
@@ -57,13 +72,12 @@ namespace IREmbeddedApp {
             }
             // Prefix bootstrap with $0 and ARGV
             string boot = String.Format(
-                //"$0='S:/{0}'\r\n{1}{2}",
                 "$0='/{0}' {1}{2}",
                 app, argv, _serfs.Read("bootstrap.rb")
                 );
-            ScriptSource source = engine.CreateScriptSourceFromString(boot, "bootstrap.rb", SourceCodeKind.File);
+            ScriptSource source = _engine.CreateScriptSourceFromString(boot, "bootstrap.rb", SourceCodeKind.File);
             int ex = source.ExecuteProgram();
-            context.Shutdown();
+            _context.Shutdown();
             return ex;
         }
     }
