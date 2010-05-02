@@ -12,14 +12,7 @@ EOF
 doc = Document.new(string)
 doc.write $stdout
 
-#??????????? Next line bust at the moment...
-#doc = Document.new File.new("mydoc.xml")
-#???????????
-s = SerfSupp.read_embedded_file("mydoc.xml")
-doc = Document.new(s)
-#doc.write $stdout	
-#???????????
-
+doc = Document.new File.new("mydoc.xml")
 doc.elements.each("inventory/section") { |element| puts element.attributes["name"] }
 p __LINE__
 # -> health

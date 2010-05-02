@@ -138,6 +138,7 @@ class System::IO::UnmanagedMemoryStream
   end
   
   def read(num)
+	return nil if eof?
 	if @textmode
 	  str = ""
 	  last_ch = nil
