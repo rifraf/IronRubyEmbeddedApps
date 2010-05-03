@@ -78,6 +78,7 @@ require 'EmbeddedRuby/AutoloadSupport'
 require 'EmbeddedRuby/IOSupport'
 require 'EmbeddedRuby/FileSupport'
 require 'EmbeddedRuby/Misc'
+require 'EmbeddedRuby/AppBoot' if File.exist?('EmbeddedRuby/AppBoot.rb')
 load $0.dup if $0
 "
                 , app, argv, _serfs.Read("EmbeddedRuby/RequireSupport.rb"));

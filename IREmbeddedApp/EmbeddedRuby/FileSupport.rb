@@ -57,17 +57,6 @@ class SERFS::Serfs
 	return nil unless stream
 	
 	open_mode.include?('b') ? stream.select_binarymode : stream.select_textmode
-
-	# Sinatra hack
-	class << stream
-      def each
-        rewind
-        while buf = read(8192)
-          yield buf
-        end
-      end
-	end
-	
 	stream
   end
 
@@ -87,12 +76,12 @@ class File
     
     alias old_exist? exist?
     def exist?(filename)
-	  old_exist?(filename) || !!(filename =~ /^\//)	# TEMP!!!
+	  old_exist?(filename) || SerfsInstance.exists(filename) || SerfsInstance.folder_exists(filename)
 	end
 
     alias old_file? file?
     def file?(filename)
-	  old_file?(filename) || !!(SerfsInstance.read_embedded_file(filename))
+	  old_file?(filename) || SerfsInstance.exists(filename)
 	end
     
     alias old_expand_path expand_path
