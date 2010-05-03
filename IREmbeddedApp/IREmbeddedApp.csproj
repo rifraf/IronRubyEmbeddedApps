@@ -59,10 +59,13 @@
   <ItemGroup>
     <Compile Include="EmbeddedRuby.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="EmbeddedRuby\RequireSupport.rb" />
+    <EmbeddedResource Include="EmbeddedRuby\LoadSupport.rb" />
+    <EmbeddedResource Include="EmbeddedRuby\AutoloadSupport.rb" />
+    <EmbeddedResource Include="EmbeddedRuby\Misc.rb" />
+    <EmbeddedResource Include="EmbeddedRuby\IOSupport.rb" />
+    <EmbeddedResource Include="EmbeddedRuby\FileSupport.rb" />
     <None Include="Properties\AssemblyInfo_in.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="EmbeddedRuby\bootstrap.rb" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

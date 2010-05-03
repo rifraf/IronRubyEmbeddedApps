@@ -18,7 +18,7 @@ namespace IREmbeddedApp {
         public EmbeddedRuby() {
             _serfs = new Serfs(null);
             _serfs.IgnoreMissingAssemblies = true;
-            AddAssembly("IREmbeddedApp", "EmbeddedRuby");
+            AddAssembly("IREmbeddedApp"); //, "EmbeddedRuby");
             Reset();
         }
 
@@ -70,12 +70,18 @@ namespace IREmbeddedApp {
             } else {
                 argv = "";
             }
-            // Prefix bootstrap with $0 and ARGV
-            string boot = String.Format(
-                "$0='/{0}'\n{1}{2}",
-                app, argv, _serfs.Read("bootstrap.rb")
-                );
-            ScriptSource source = _engine.CreateScriptSourceFromString(boot, "bootstrap.rb", SourceCodeKind.File);
+            // Create boot up script
+            string boot = String.Format(@"$0='/{0}'
+{1}{2}
+require 'EmbeddedRuby/LoadSupport'
+require 'EmbeddedRuby/AutoloadSupport'
+require 'EmbeddedRuby/IOSupport'
+require 'EmbeddedRuby/FileSupport'
+require 'EmbeddedRuby/Misc'
+load $0.dup if $0
+"
+                , app, argv, _serfs.Read("EmbeddedRuby/RequireSupport.rb"));
+            ScriptSource source = _engine.CreateScriptSourceFromString(boot, "RequireSupport.rb", SourceCodeKind.File);
             int ex = source.ExecuteProgram();
             _context.Shutdown();
             return ex;
