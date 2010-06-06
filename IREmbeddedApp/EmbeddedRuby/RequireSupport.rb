@@ -7,7 +7,8 @@
 #-------------------
 # Extend Serfs class
 #-------------------
-require 'Serfs'
+load_assembly SerfsDll
+
 class SERFS::Serfs
 
   attr_accessor :debug

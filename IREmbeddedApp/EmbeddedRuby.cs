@@ -18,7 +18,7 @@ namespace IREmbeddedApp {
         public EmbeddedRuby() {
             _serfs = new Serfs(null);
             _serfs.IgnoreMissingAssemblies = true;
-            AddAssembly("IREmbeddedApp"); //, "EmbeddedRuby");
+            AddAssembly("IREmbeddedApp");
             Reset();
         }
 
@@ -59,6 +59,16 @@ namespace IREmbeddedApp {
         public int Run(string app, string[] args) {
             SetConstant("SerfsInstance", _serfs);
 
+            Assembly exe = Assembly.GetEntryAssembly();
+            string serfs_assy = exe.FullName;
+
+            try {
+                serfs_assy = Assembly.Load("Serfs").FullName;
+            }
+            catch (System.IO.FileNotFoundException) {
+                // Allowed : it means whe have been ILMerged
+            }
+
             // Sort out ARGV
             string argv;
             if ((args != null) && (args.Length > 0)) {
@@ -72,6 +82,7 @@ namespace IREmbeddedApp {
             }
             // Create boot up script
             string boot = String.Format(@"$0='/{0}'
+SerfsDll = '{3}'
 {1}{2}
 require 'EmbeddedRuby/LoadSupport'
 require 'EmbeddedRuby/AutoloadSupport'
@@ -81,7 +92,8 @@ require 'EmbeddedRuby/Misc'
 require 'EmbeddedRuby/AppBoot' if File.exist?('EmbeddedRuby/AppBoot.rb')
 load $0.dup if $0
 "
-                , app, argv, _serfs.Read("EmbeddedRuby/RequireSupport.rb"));
+                , app, argv, _serfs.Read("EmbeddedRuby/RequireSupport.rb"), serfs_assy);
+
             ScriptSource source = _engine.CreateScriptSourceFromString(boot, "RequireSupport.rb", SourceCodeKind.File);
             int ex = source.ExecuteProgram();
             _context.Shutdown();
