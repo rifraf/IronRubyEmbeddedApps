@@ -44,3 +44,9 @@ This repository contains the following parts
 # *IREmbeddedLibraries* : A DLL containing a copy of the standard Ruby 1.8 libraries (including @rubygems@, @rexml@ etc), plus @rack-1.1.0@ and @sinatra-1.0@. This can be optionally included in an application if you need library support.
 # *IRSinatra* : A fully working Sinatra application with 2 flavours, one with libraries in individual DLLs, one with them all merged into the .exe
 # *IRTestResources* : An example DLL containing no code, just embedded resources (optparse, test::unit and flexmock taken directly from an ordinary Ruby install).
+
+h1. License
+
+Copyright (c) 2010 David Lake (rifraf -> rifraf.net)
+
+Released under the MIT license. See LICENSE file for details.

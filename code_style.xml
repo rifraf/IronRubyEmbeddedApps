@@ -75,6 +75,7 @@
     <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aa_bb" ElementKind="StaticReadonly" />
     <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="EnumMember" />
     <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Other" />
+    <Abbreviation Text="CAH" />
     <Abbreviation Text="OS" />
     <Abbreviation Text="PL" />
     <Abbreviation Text="NS" />
