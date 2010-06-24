@@ -28,7 +28,7 @@ using System.Security.Permissions;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("04947356-1695-4c1c-89a6-b8095f16907f")]
 
-[assembly: AssemblyVersion("0.1.0.11559")]
-[assembly: AssemblyFileVersion("0.1.0.11559")]
-[assembly: AssemblyInformationalVersionAttribute("0.1.0.11559")]
+[assembly: AssemblyVersion("0.1.0.11645")]
+[assembly: AssemblyFileVersion("0.1.0.11645")]
+[assembly: AssemblyInformationalVersionAttribute("0.1.0.11645")]
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, Execution = true)]

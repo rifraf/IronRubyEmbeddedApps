@@ -13,10 +13,10 @@ def load_embedded_file(path, wrap = false)
   false
 end
 
-alias old_load load
+alias irembedded_old_load load
 def load(filename, wrap = false)
   filename.gsub!(/^\//,'')
-  old_load(filename, wrap)
+  irembedded_old_load(filename, wrap)
   rescue LoadError => load_error
     $! = nil
     if (load_error.message =~ /#{Regexp.escape filename}\z/) and load_embedded_file(filename, wrap)
@@ -24,6 +24,6 @@ def load(filename, wrap = false)
     end
   raise load_error
 end
-private :old_load
+private :irembedded_old_load
 private :load
 

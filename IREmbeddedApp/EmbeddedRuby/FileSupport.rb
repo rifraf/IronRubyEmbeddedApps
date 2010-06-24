@@ -65,35 +65,35 @@ end
 class File
 
   class << self
-    alias old_stat stat
+    alias irembedded_old_stat stat
     def stat(filename)
-      old_stat(filename)
+      irembedded_old_stat(filename)
       rescue Errno::ENOENT => error
         file_stat = SerfsInstance.stat(filename)
         return file_stat if file_stat
         raise error
     end
     
-    alias old_exist? exist?
+    alias irembedded_old_exist? exist?
     def exist?(filename)
-	  old_exist?(filename) || SerfsInstance.exists(filename) || SerfsInstance.folder_exists(filename)
+	  irembedded_old_exist?(filename) || SerfsInstance.exists(filename) || SerfsInstance.folder_exists(filename)
 	end
 
-    alias old_file? file?
+    alias irembedded_old_file? file?
     def file?(filename)
-	  old_file?(filename) || SerfsInstance.exists(filename)
+	  irembedded_old_file?(filename) || SerfsInstance.exists(filename)
 	end
     
-    alias old_expand_path expand_path
+    alias irembedded_old_expand_path expand_path
     def expand_path(path, aDirString = nil)
 	  return path if path =~ /^\//
-	  old_expand_path(path, aDirString)
+	  irembedded_old_expand_path(path, aDirString)
 	end
        
     # TODO: service blk
-    alias old_open open
+    alias irembedded_old_open open
     def open(filename, *args, &blk)
-      old_open(filename, *args, &blk)
+      irembedded_old_open(filename, *args, &blk)
       rescue => error
 		puts "FILE:OPEN(#{filename}, #{args.join(', ')})"  if SerfsInstance.debug
         stream = SerfsInstance.open(filename, *args, &blk)
@@ -101,9 +101,9 @@ class File
         raise error
     end
     
-    alias old_new new
+    alias irembedded_old_new new
     def new(filename, *args)
-      old_new(filename, *args)
+      irembedded_old_new(filename, *args)
       rescue Errno::ENOENT => error
 		puts "FILE:NEW(#{filename}, #{args.join(', ')})"  if SerfsInstance.debug
         stream = SerfsInstance.open(filename, *args)

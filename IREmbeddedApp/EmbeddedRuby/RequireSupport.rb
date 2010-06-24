@@ -39,7 +39,7 @@ end
 # --------------------------------------------------
 # Patch require to try Serfs if disk file is not found
 # --------------------------------------------------
-alias old_require require
+alias irembedded_old_require require
 def require(path)
 
   puts("======================= require > #{path}") if SerfsInstance.debug
@@ -49,7 +49,7 @@ def require(path)
   return false if $".include?(filename_non_rb)
   
   # Defer to disk
-  old_require(path) 
+  irembedded_old_require(path) 
   rescue LoadError => load_error
     if load_error.message =~ /#{Regexp.escape path}\z/
       puts("Try #{path}") if SerfsInstance.debug
@@ -75,6 +75,6 @@ def require(path)
     end
   raise load_error
 end
-private :old_require
+private :irembedded_old_require
 private :require
 

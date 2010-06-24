@@ -19,7 +19,7 @@ end
 # -----------------------------------------------------------
 class Module
 
-  alias old_const_missing const_missing
+  alias irembedded_old_const_missing const_missing
   def const_missing(name)
     puts "MISSING #{name}" if SerfsInstance.debug
     SerfsInstance.autoloaded[self] ||= {}
@@ -30,7 +30,7 @@ class Module
       require file
       return const_get(name) if const_defined?(name)
     end
-    old_const_missing(name)
+    irembedded_old_const_missing(name)
   end
 	
   def autoload( name, file_name )
