@@ -14,7 +14,11 @@ class SERFS::Serfs
       next if load_path_invalid?(loc)
       serf_name = get_serf_name(loc, path)
       stream = self.open_read(serf_name)
-      return stream if stream
+      if stream
+		# Mix in the IO capabilities
+		stream.extend(EmbeddedIOStream) unless stream.respond_to?(:select_binary_reader)
+	    return stream 
+ 	  end
     end
     false
   end
@@ -24,18 +28,33 @@ class SERFS::Serfs
   # Very limited support at the moment
   #---------------------
   class SerfStat
-    attr_reader :mtime, :size
-    def initialize(filename, content)
+    attr_reader :mtime, :size, :mode, :blksize
+    def initialize(filename, content, dirname)
+	  @dirname = @dirname
       @mtime = Time.now
       @size = content.size
+      @mode = 0444 # Read only
+      @blksize = nil
     end    
+    
+    def symlink?;   false;      end
+    def file?;      !@dirname;  end
+    def directory?; !!@dirname; end
+    def chardev?;   true;       end
+    def blockdev?;  true;       end
+    def socket?;    false;      end
+    def pipe?;      false;      end
   end
   
   # Provide File::stat equivalent
   def stat(filename)
+    dirname = find_embedded_path(filename)
+    return SerfStat.new(filename, '', dirname) if dirname
 	str = read_embedded_file(filename)
-    SerfStat.new(filename, str) if str
+    return SerfStat.new(filename, str, nil) if str
+    nil
   end
+  alias lstat stat
 
   #---------------------
   # Provide File::open equivalent
@@ -56,7 +75,7 @@ class SERFS::Serfs
 	stream = read_embedded_stream(filename)
 	return nil unless stream
 	
-	open_mode.include?('b') ? stream.select_binarymode : stream.select_textmode
+	open_mode.include?('b') ? stream.select_binary_reader : stream.select_text_reader
 	stream
   end
 
@@ -65,7 +84,7 @@ end
 class File
 
   class << self
-    alias irembedded_old_stat stat
+    alias irembedded_old_stat stat    
     def stat(filename)
       irembedded_old_stat(filename)
       rescue Errno::ENOENT => error
@@ -90,15 +109,21 @@ class File
 	  irembedded_old_expand_path(path, aDirString)
 	end
        
-    # TODO: service blk
     alias irembedded_old_open open
     def open(filename, *args, &blk)
       irembedded_old_open(filename, *args, &blk)
       rescue => error
 		puts "FILE:OPEN(#{filename}, #{args.join(', ')})"  if SerfsInstance.debug
         stream = SerfsInstance.open(filename, *args, &blk)
-        return stream if stream
-        raise error
+        raise error unless stream
+        if blk
+		  begin
+			return blk.call(stream) 
+		  ensure
+			stream.close
+		  end
+		end
+        return stream
     end
     
     alias irembedded_old_new new

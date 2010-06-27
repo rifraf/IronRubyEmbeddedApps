@@ -19,7 +19,8 @@ class SERFS::Serfs
   
   def get_serf_name(loc, path)
     return path[1..-1] if path =~ /^[\/]/
-	"#{loc}/#{path}".gsub(/\\/,'/').gsub(/^\/\//, './')
+    return path[2..-1] if path =~ /^\.[\/]/
+    "#{loc}/#{path}".gsub(/\\/,'/').gsub(/^\/\//, './')
   end
   
   # Try to read complete file to a string
@@ -32,6 +33,17 @@ class SERFS::Serfs
       return str.to_s if str
     end
     false
+  end
+
+  # Look for a match in the path
+  def find_embedded_path(path)
+    str = nil
+    $LOAD_PATH.each do |loc|
+      next if load_path_invalid?(loc)
+      serf_name = get_serf_name(loc, path)
+      return serf_name if FolderExists(serf_name)
+    end
+    nil
   end
 
 end
@@ -65,7 +77,7 @@ def require(path)
 	    $" << path
         puts("Found #{filename}") if SerfsInstance.debug
 		begin
-	      eval(str, nil, '/' + filename, 0)
+	      load_embedded_string(str, filename, false)
 	    rescue Exception => e
           puts("Caught (#{filename}):" + e.message) if SerfsInstance.debug
           raise e
@@ -78,3 +90,15 @@ end
 private :irembedded_old_require
 private :require
 
+def load_embedded_string(str, path, wrap = false)
+  # TODO: If the optional wrap parameter is true, the loaded script will be executed under an anonymous module, 
+  # TODO: protecting the calling program's global namespace.
+  # TODO: In no circumstance will any local variables in the loaded file be propagated to the loading environment. 
+  if (str) 
+    eval(str, TOPLEVEL_BINDING, '/' + path, 0)
+    return true
+  end
+  false
+end
+
+#SerfsInstance.debug = true
