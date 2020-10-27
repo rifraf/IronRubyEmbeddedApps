@@ -15,8 +15,8 @@ namespace IronRubyConsole {
                 resources.Mount("Files/ironruby");
                 resources.Mount("Files/rack-1.1.0/lib");
                 resources.Mount("Files/sinatra-1.0/lib");
-                resources.Mount("Files/site_ruby/1.8");
-                resources.Mount("Files/1.8");
+                resources.Mount("Files/site_ruby/1.9.1");
+                resources.Mount("Files/1.9.1");
 
                 er.Mount("Applications");
                 exitcode = er.Run("sinatra_app.rb", args);

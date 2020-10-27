@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+  <Import Project="..\packages\ILMerge.3.0.41\build\ILMerge.props" Condition="Exists('..\packages\ILMerge.3.0.41\build\ILMerge.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -9,6 +10,15 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>IRSinatra</RootNamespace>
     <AssemblyName>IRSinatra</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -18,6 +28,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -26,37 +37,25 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IREmbeddedApp, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="IronRuby, Version=1.1.4.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\IREmbeddedApp\bin\IREmbeddedApp.dll</HintPath>
+      <HintPath>..\IREmbeddedApp\IronRuby.dll</HintPath>
     </Reference>
-    <Reference Include="IREmbeddedLibraries, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="IronRuby.Libraries">
+      <HintPath>..\IREmbeddedApp\IronRuby.Libraries.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dynamic, Version=1.1.0.30, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\IREmbeddedLibraries\bin\IREmbeddedLibraries.dll</HintPath>
+      <HintPath>..\IREmbeddedApp\Microsoft.Dynamic.dll</HintPath>
     </Reference>
-    <Reference Include="IronRuby, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Scripting, Version=1.1.0.30, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\IronRuby 1.0\bin\IronRuby.dll</HintPath>
+      <HintPath>..\IREmbeddedApp\Microsoft.Scripting.dll</HintPath>
     </Reference>
-    <Reference Include="IronRuby.Libraries, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\IronRuby 1.0\bin\IronRuby.Libraries.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Dynamic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\IronRuby 1.0\bin\Microsoft.Dynamic.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Scripting, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\IronRuby 1.0\bin\Microsoft.Scripting.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Scripting.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\IronRuby 1.0\bin\Microsoft.Scripting.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Serfs, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Serfs, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\IREmbeddedApp\Serfs.dll</HintPath>
     </Reference>
@@ -80,6 +79,20 @@
   <ItemGroup>
     <EmbeddedResource Include="Applications\EmbeddedRuby\AppBoot.rb" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IREmbeddedApp\IREmbeddedApp.csproj">
+      <Project>{252b7e48-4d69-4aaf-ab8f-bca432d0bf2e}</Project>
+      <Name>IREmbeddedApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IREmbeddedLibraries\IREmbeddedLibraries.csproj">
+      <Project>{68cbaeda-18cc-4cc0-8555-942890512ef8}</Project>
+      <Name>IREmbeddedLibraries</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -89,8 +102,16 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files\Microsoft\ILMerge\ILMerge.exe" /out:merge\IRSinatra.exe IRSinatra.exe IREmbeddedLibraries.dll IREmbeddedApp.dll Serfs.dll
-rem "C:\Program Files\Microsoft\ILMerge\ILMerge.exe" /out:merge\IRSinatra.exe IRSinatra.exe IREmbeddedLibraries.dll IREmbeddedApp.dll V:\Projects\Serfs\Serfs\bin\Serfs.dll
+    <PostBuildEvent>rem See https://www.nuget.org/packages/ilmerge
+rem Can't get it to fully resolve
+rem "..\..\packages\ILMerge.3.0.41\tools\net452\ILMerge.exe" /out:merge\IRSinatra.exe IRSinatra.exe IronRuby.dll IronRuby.Libraries.dll IREmbeddedLibraries.dll IREmbeddedApp.dll Microsoft.Dynamic.dll Microsoft.Scripting.dll Serfs.dll
+
 </PostBuildEvent>
   </PropertyGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\ILMerge.3.0.41\build\ILMerge.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILMerge.3.0.41\build\ILMerge.props'))" />
+  </Target>
 </Project>

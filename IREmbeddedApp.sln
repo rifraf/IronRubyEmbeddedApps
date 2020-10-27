@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IREmbeddedApp", "IREmbeddedApp\IREmbeddedApp.csproj", "{252B7E48-4D69-4AAF-AB8F-BCA432D0BF2E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IRTestResources", "IRTestResources\IRTestResources.csproj", "{9FE6381A-B2E1-4B08-A9CC-F62CD14B719C}"
@@ -52,5 +54,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AF16B52E-5013-4ADF-8FC9-859D7D396966}
 	EndGlobalSection
 EndGlobal

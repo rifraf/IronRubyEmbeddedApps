@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -9,6 +9,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>IREmbeddedApp</RootNamespace>
     <AssemblyName>IREmbeddedApp</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -18,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -26,27 +34,20 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IronRuby, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\IronRuby 1.0\bin\IronRuby.dll</HintPath>
+    <Reference Include="IronRuby">
+      <HintPath>.\IronRuby.dll</HintPath>
     </Reference>
-    <Reference Include="IronRuby.Libraries, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\IronRuby 1.0\bin\IronRuby.Libraries.dll</HintPath>
+    <Reference Include="IronRuby.Libraries">
+      <HintPath>.\IronRuby.Libraries.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\IronRuby 1.0\bin\Microsoft.Dynamic.dll</HintPath>
+    <Reference Include="Microsoft.Dynamic">
+      <HintPath>.\Microsoft.Dynamic.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Scripting, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\IronRuby 1.0\bin\Microsoft.Scripting.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Scripting.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\IronRuby 1.0\bin\Microsoft.Scripting.Core.dll</HintPath>
+    <Reference Include="Microsoft.Scripting">
+      <HintPath>.\Microsoft.Scripting.dll</HintPath>
     </Reference>
     <Reference Include="Serfs, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

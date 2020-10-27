@@ -1,0 +1,96 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{499B4084-8BA3-4B33-A146-CA32D078D961}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>IRSinatra</RootNamespace>
+    <AssemblyName>IRSinatra</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="IREmbeddedApp, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\IREmbeddedApp\bin\IREmbeddedApp.dll</HintPath>
+    </Reference>
+    <Reference Include="IREmbeddedLibraries, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\IREmbeddedLibraries\bin\IREmbeddedLibraries.dll</HintPath>
+    </Reference>
+    <Reference Include="IronRuby, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\IronRuby 1.0\bin\IronRuby.dll</HintPath>
+    </Reference>
+    <Reference Include="IronRuby.Libraries, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\IronRuby 1.0\bin\IronRuby.Libraries.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dynamic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\IronRuby 1.0\bin\Microsoft.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\IronRuby 1.0\bin\Microsoft.Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\IronRuby 1.0\bin\Microsoft.Scripting.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Serfs, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\IREmbeddedApp\Serfs.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Applications\sinatra_app.rb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="status.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Applications\Public\index.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Applications\EmbeddedRuby\AppBoot.rb" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>"C:\Program Files\Microsoft\ILMerge\ILMerge.exe" /out:merge\IRSinatra.exe IRSinatra.exe IREmbeddedLibraries.dll IREmbeddedApp.dll Serfs.dll
+rem "C:\Program Files\Microsoft\ILMerge\ILMerge.exe" /out:merge\IRSinatra.exe IRSinatra.exe IREmbeddedLibraries.dll IREmbeddedApp.dll V:\Projects\Serfs\Serfs\bin\Serfs.dll
+</PostBuildEvent>
+  </PropertyGroup>
+</Project>

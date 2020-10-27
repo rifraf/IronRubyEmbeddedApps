@@ -1,0 +1,15 @@
+TODO
+----
+
+DONE: Webrick doesn't find the Sinatra 404 image
+DONE: Loads of 'unknown:0: warning: already initialized constant RC_BAD_REQUEST' etc
+DONE: Serve statics out of public?
+DONE: S: really?
+DONE: Tabs/spaces cleanup
+DONE: Merge assemblies (ilmerge)
+Sinatra 'each' issue.
+
+On Firefox, we get occasional 'you have chosen to open...' dialogs when refreshing. Not seen on others.
+Look on disk - where?
+Improve on exist?
+Option to prevent disk lookup
