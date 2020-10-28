@@ -16,7 +16,7 @@ using System.Security.Permissions;
 #endif
 [assembly: AssemblyCompany("djlSoft")]
 [assembly: AssemblyProduct("IREmbeddedLibraries")]
-[assembly: AssemblyCopyright("Copyright David Lake © 2010")]
+[assembly: AssemblyCopyright("Copyright David Lake © 2010-2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -25,10 +25,6 @@ using System.Security.Permissions;
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-// The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e94d3130-fea2-47da-962b-6ee0965a42d4")]
-
-[assembly: AssemblyVersion("0.1.0.$WCREV$")]
-[assembly: AssemblyFileVersion("0.1.0.$WCREV$")]
-[assembly: AssemblyInformationalVersionAttribute("0.1.0.$WCREV$")]
-[assembly: SecurityPermission(SecurityAction.RequestMinimum, Execution = true)]
+[assembly: AssemblyVersion("0.2.0.$WCREV$")]
+[assembly: AssemblyFileVersion("0.2.0.$WCREV$")]
+[assembly: AssemblyInformationalVersionAttribute("0.2.0.$WCREV$")]

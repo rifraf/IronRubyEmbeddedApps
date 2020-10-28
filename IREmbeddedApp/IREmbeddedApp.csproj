@@ -37,21 +37,32 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IronRuby">
-      <HintPath>.\IronRuby.dll</HintPath>
-    </Reference>
-    <Reference Include="IronRuby.Libraries">
-      <HintPath>.\IronRuby.Libraries.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Dynamic">
-      <HintPath>.\Microsoft.Dynamic.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Scripting">
-      <HintPath>.\Microsoft.Scripting.dll</HintPath>
-    </Reference>
-    <Reference Include="Serfs, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="IREmbeddedApp, Version=0.2.0.30916, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\Serfs.dll</HintPath>
+      <HintPath>..\..\Working\RTACommonDLLs\IREmbeddedApp.dll</HintPath>
+    </Reference>
+    <Reference Include="IREmbeddedLibraries">
+      <HintPath>..\..\Working\RTACommonDLLs\IREmbeddedLibraries.dll</HintPath>
+    </Reference>
+    <Reference Include="IronRuby, Version=1.1.4.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Working\RTACommonDLLs\IronRuby.dll</HintPath>
+    </Reference>
+    <Reference Include="IronRuby.Libraries, Version=1.1.4.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Working\RTACommonDLLs\IronRuby.Libraries.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dynamic, Version=1.1.0.30, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Working\RTACommonDLLs\Microsoft.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting, Version=1.1.0.30, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Working\RTACommonDLLs\Microsoft.Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="Serfs, Version=0.2.0.30912, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Working\RTACommonDLLs\Serfs.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -77,7 +88,9 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>if exist ..\..\prebuild.bat ..\..\prebuild.bat</PreBuildEvent>
-    <PostBuildEvent>if exist ..\..\postbuild.bat ..\..\postbuild.bat</PostBuildEvent>
+    <PreBuildEvent>if exist ..\..\prebuild.bat ..\..\prebuild.bat
+if exist "c:\progra~1\TortoiseSVN\bin\SubWCRev.exe" "c:\progra~1\TortoiseSVN\bin\SubWCRev.exe" "$(ProjectDir)\" "$(ProjectDir)Properties\AssemblyInfo_in.cs" "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
+    <PostBuildEvent>if exist ..\..\postbuild.bat ..\..\postbuild.bat
+if exist \Working\RTACommonDLLs xcopy IREmbeddedApp.dll \Working\RTACommonDLLs\ /y</PostBuildEvent>
   </PropertyGroup>
 </Project>
